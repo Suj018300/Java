@@ -12,19 +12,19 @@ public class Server {
 
         int port = 8080;
         ServerSocket socket = new ServerSocket(port);
-        socket.setSoTimeout(10000);
+        // socket.setSoTimeout(10000);
         while (true) {
             try {
                 System.out.println("Server is listing to port :" + port);
-                Socket acceptedConnection = socket.accept();
-                System.out.println("Connection Accpeted from the client :" + acceptedConnection.getRemoteSocketAddress());
-                PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream());
-                BufferedReader fromClient = new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream()));
-
-                toClient.println("Hello from the server");
-                toClient.close();
-                fromClient.close();
-                acceptedConnection.close();
+                try (Socket acceptedConnection = socket.accept()) {
+                    System.out.println("Connection Accpeted from the client :" + acceptedConnection.getRemoteSocketAddress());
+                    BufferedReader fromClient;
+                    try (PrintWriter toClient = new PrintWriter(acceptedConnection.getOutputStream())) {
+                        fromClient = new BufferedReader(new InputStreamReader(acceptedConnection.getInputStream()));
+                        toClient.println("Hello from the server");
+                    }
+                    fromClient.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
