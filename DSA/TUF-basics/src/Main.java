@@ -1,3 +1,5 @@
+import java.util.*;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -10,8 +12,150 @@ public class Main {
         int a = 5;
 		int b = 84756;
 		int c = 1234567;
-		System.out.println(isValidPalindrome("A man, a plan, a canal: Panama"));
+//		System.out.println(isValidPalindrome("A man, a plan, a canal: Panama"));
+
+//		Scanner sc = new Scanner(System.in);
+//
+//		System.out.print("Enter number of Green balls: ");
+//		int g = sc.nextInt();
+//
+//		System.out.print("Enter number of Yellow balls: ");
+//		int y = sc.nextInt();
+//
+//		System.out.print("Enter number of Red balls: ");
+//		int r = sc.nextInt();
+//
+//		BallArrangement.arrange(g, y, r, ' ');
+//
+//		System.out.println("Output: " + BallArrangement.count);
+//
+//		sc.close();
+//		int[] arr = {22, 24, 55,22 ,12, 8};
+//		System.out.println(fib(4));
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the numbers in the array:");
+		int n = sc.nextInt();
+		System.out.println("Enter the array list : ");
+		int[] arr = new int[n];
+		for (int i = 0; i<n; i++) {
+			arr[i] = sc.nextInt();
+		}
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int i =0; i<arr.length; i++) {
+			map.put(arr[i], map.getOrDefault(arr[i ],0)+1);
+		};
+		for ( int i : map.keySet()) {
+			System.out.println(i + "->" + map.get(i) + "times");
+		};
+//		System.out.println("Enter the total sum to two numbers in array: ");
+//		int[] res=  firstSecond(arr);
+//		int target = sc.nextInt();
+//		System.out.println(missing(arr));
+
     }
+
+	public static void freq(int[] arr) {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int i =0; i<arr.length; i++) {
+			map.put(i, map.getOrDefault(i,0)+1);
+		};
+		for ( int i : map.keySet()) {
+			System.out.println(i + "->" + map.get(i) + "times");
+		};
+	}
+
+
+
+	public static int missing (int[] arr ) {
+
+		int last = arr.length+1;
+		int eSum = last * (last + 1)/2;
+		int aSum = 0;
+		for (int num:arr) {
+			aSum+=num;
+		}
+		int res = eSum - aSum;
+		return res;
+	}
+
+
+	public static int[] sum(int[] arr, int target) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+		for (int i =0; i<= arr.length; i++) {
+			int res1 = target - arr[i];
+			if (map.containsKey(res1)) {
+				return new int[] {map.get(res1), i};
+			}
+			map.put(arr[i], i);
+		}
+
+		return new int[] {};
+	}
+
+
+
+	public static boolean isDuplicate(int[] arr) {
+
+		Set<Integer> hashSet = new HashSet<>();
+		for ( int num: arr) {
+			if (!hashSet.add(num)) {
+				return true;
+			}
+		}
+
+		return false;
+
+	};
+
+
+
+	public static int[] firstSecond(int[] arr) {
+
+		int largest = Integer.MIN_VALUE;
+		int smallest = Integer.MAX_VALUE;
+
+		for(int i =0; i<arr.length; i++) {
+			if (arr[i]>largest) {
+				smallest=largest;
+				largest=arr[i];
+			} else if (arr[i]>smallest && arr[i] != largest) {
+				smallest=arr[i];
+			}
+		}
+
+		return new int[]{largest, smallest};
+
+	};
+
+
+
+
+
+
+	public static int reverse(int n ) {
+
+		int rev =0;
+		while (n !=0) {
+            int x = 0;
+            int digit = x%10;
+			if(rev>Integer.MAX_VALUE || rev<Integer.MIN_VALUE) {
+				return 0;
+			};
+			rev = (rev*10) + digit;
+			n = n/10;
+		}
+
+        return rev;
+    };
+
+
+	public static int fib(int n) {
+		if (n <= 1) {
+        return n;
+    }
+    return fib(n-1) + fib(n-2);
+	}
 
 	public static boolean isValidPalindrome(String s) {
 		int i =0;
@@ -83,19 +227,19 @@ public class Main {
 
 	};
 
-	static void reverse(int b) {
-
-		int reverse = 0;
-		while(b !=0) {
-			int digit = b%10;
-			if (reverse>Integer.MAX_VALUE/10 || reverse<Integer.MIN_VALUE/10) {
-				return;
-			};
-			reverse = (reverse*10) + digit;
-			b =b/10;
-		}
-		System.out.println(reverse);
-	}
+//	static void reverse(int b) {
+//
+//		int reverse = 0;
+//		while(b !=0) {
+//			int digit = b%10;
+//			if (reverse>Integer.MAX_VALUE/10 || reverse<Integer.MIN_VALUE/10) {
+//				return;
+//			};
+//			reverse = (reverse*10) + digit;
+//			b =b/10;
+//		}
+//		System.out.println(reverse);
+//	}
 
 	static void counter(int n) {
 	    int count = (int)(Math.log10(n)+1);
